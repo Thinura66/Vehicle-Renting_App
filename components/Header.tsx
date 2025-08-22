@@ -1,11 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>Vehicle Rental</Text>
-      <Text style={styles.headerSubtitle}>Find your perfect ride</Text>
+      <View style={styles.headerContent}>
+        <Image 
+          source={require('../assets/Logo.png')} 
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <View style={styles.headerText}>
+          <Text style={styles.headerTitle}>Rent Now</Text>
+          <Text style={styles.headerSubtitle}>Find your perfect ride</Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -14,7 +23,20 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#2563eb',
     padding: 20,
-    paddingTop: 10,
+    paddingTop: 40,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    marginRight: 15,
+  },
+  headerText: {
+    flex: 1,
   },
   headerTitle: {
     fontSize: 28,
