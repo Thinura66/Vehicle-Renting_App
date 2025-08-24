@@ -76,6 +76,29 @@ export default function App() {
     Alert.alert('Logged Out', 'You have been successfully logged out');
   };
 
+  const handleProfile = () => {
+    Alert.alert('Profile', 'Profile page would be implemented here');
+  };
+
+  const handleSettings = () => {
+    Alert.alert('Settings', 'Settings page would be implemented here');
+  };
+
+  const handleMyBookings = () => {
+    Alert.alert('My Bookings', 'My Bookings page would be implemented here');
+  };
+
+  const handleHelpCenter = () => {
+    Alert.alert('Help Center', 'Help Center page would be implemented here');
+  };
+
+  const handleHome = () => {
+    // Reset any filters and show home view
+    setSearchLocation('');
+    setSelectedCategory('all');
+    console.log('Redirected to home page');
+  };
+
   // Show login page if user is not logged in
   if (!isLoggedIn) {
     return (
@@ -92,7 +115,15 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
 
-      <Header showLogout={true} onLogout={handleLogout} />
+      <Header 
+        showLogout={true} 
+        onLogout={handleLogout}
+        onProfile={handleProfile}
+        onSettings={handleSettings}
+        onMyBookings={handleMyBookings}
+        onHelpCenter={handleHelpCenter}
+        onHome={handleHome}
+      />
 
       <SearchBar 
         searchLocation={searchLocation}
