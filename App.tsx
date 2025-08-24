@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, View, ScrollView, SafeAreaView, Alert } from 'react-native';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Categories from './components/Categories';
 import VehicleList from './components/VehicleList';
+import Login from './components/login/login';
 import { Vehicle, Category } from './components/types';
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchLocation, setSearchLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -54,11 +56,43 @@ export default function App() {
     },
   ];
 
+  const handleLogin = (email: string, password: string) => {
+    // Here you would typically make an API call to authenticate the user
+    console.log('Login attempt:', email);
+    Alert.alert('Success', 'Login successful!');
+    setIsLoggedIn(true);
+  };
+
+  const handleSignUp = () => {
+    Alert.alert('Sign Up', 'Sign up functionality would be implemented here');
+  };
+
+  const handleForgotPassword = () => {
+    Alert.alert('Forgot Password', 'Password reset functionality would be implemented here');
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    Alert.alert('Logged Out', 'You have been successfully logged out');
+  };
+
+  // Show login page if user is not logged in
+  if (!isLoggedIn) {
+    return (
+      <Login
+        onLogin={handleLogin}
+        onSignUp={handleSignUp}
+        onForgotPassword={handleForgotPassword}
+      />
+    );
+  }
+
+  // Show main app if user is logged in
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
 
-      <Header />
+      <Header showLogout={true} onLogout={handleLogout} />
 
       <SearchBar 
         searchLocation={searchLocation}

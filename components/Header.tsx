@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import LogoutButton from './LogoutButton';
 
-const Header = () => {
+interface HeaderProps {
+  showLogout?: boolean;
+  onLogout?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ showLogout = false, onLogout }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerContent}>
@@ -14,6 +20,9 @@ const Header = () => {
           <Text style={styles.headerTitle}>Rent Now</Text>
           <Text style={styles.headerSubtitle}>Find your perfect ride</Text>
         </View>
+        {showLogout && onLogout && (
+          <LogoutButton onLogout={onLogout} />
+        )}
       </View>
     </View>
   );
