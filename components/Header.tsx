@@ -1,5 +1,5 @@
+import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import LogoutButton from './LogoutButton';
 import DropdownMenu from './Drop Down Menue/dropdown';
 
 interface HeaderProps {

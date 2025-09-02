@@ -7,8 +7,10 @@ import Categories from './components/Categories';
 import VehicleList from './components/VehicleList';
 import Login from './components/login/login';
 import Profile from './components/Profile/Profile';
+import Settings from './components/Settings/Settings';
 import { MyBookings } from './components/Mybookings';
 import { RentalBooking } from './components/RentalBooking';
+import HelpCenter from './components/HelpCenter/HelpCenter';
 import { Vehicle, Category } from './components/types';
 
 export default function App() {
@@ -17,6 +19,15 @@ export default function App() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [searchLocation, setSearchLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  // Shared profile data state
+  const [profileData, setProfileData] = useState({
+    username: 'John Doe',
+    email: 'john.doe@example.com',
+    phoneNumber: '+1 234 567 8900',
+    address: '123 Main Street, City, State, 12345',
+    profilePhoto: '',
+  });
 
   const vehicleCategories: Category[] = [
     { id: 'all', name: 'All', count: 150 },
@@ -110,7 +121,7 @@ export default function App() {
   };
 
   const handleSettings = () => {
-    Alert.alert('Settings', 'Settings page would be implemented here');
+    setCurrentPage('settings');
   };
 
   const handleMyBookings = () => {
@@ -118,7 +129,7 @@ export default function App() {
   };
 
   const handleHelpCenter = () => {
-    Alert.alert('Help Center', 'Help Center page would be implemented here');
+    setCurrentPage('help');
   };
 
   const handleHome = () => {
@@ -158,11 +169,31 @@ export default function App() {
 
   // Show main app if user is logged in
   if (currentPage === 'profile') {
-    return <Profile onBack={handleBackToHome} />;
+    return (
+      <Profile 
+        onBack={handleBackToHome} 
+        profileData={profileData}
+        setProfileData={setProfileData}
+      />
+    );
+  }
+
+  if (currentPage === 'settings') {
+    return (
+      <Settings 
+        onBack={handleBackToHome} 
+        profileData={profileData}
+        setProfileData={setProfileData}
+      />
+    );
   }
 
   if (currentPage === 'bookings') {
     return <MyBookings onBack={handleBackToHome} />;
+  }
+
+  if (currentPage === 'help') {
+    return <HelpCenter onBack={handleBackToHome} />;
   }
 
   if (currentPage === 'rental' && selectedVehicle) {
