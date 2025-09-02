@@ -11,12 +11,11 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-interface ProfileData {
+interface SettingsData {
   username: string;
   email: string;
   phoneNumber: string;
   address: string;
-  profilePhoto: string;
 }
 
 interface PasswordData {
@@ -27,13 +26,17 @@ interface PasswordData {
 
 interface SettingsProps {
   onBack: () => void;
-  profileData: ProfileData;
-  setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
 }
 
-const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData }) => {
+const Settings: React.FC<SettingsProps> = ({ onBack }) => {
+  const [settingsData, setSettingsData] = useState<SettingsData>({
+    username: 'John Doe',
+    email: 'john.doe@example.com',
+    phoneNumber: '+1 234 567 8900',
+    address: '123 Main Street, City, State, 12345',
+  });
 
-  const [tempData, setTempData] = useState<ProfileData>(profileData);
+  const [tempData, setTempData] = useState<SettingsData>(settingsData);
   const [isEditing, setIsEditing] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   
@@ -44,7 +47,7 @@ const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData
   });
 
   const handleEdit = () => {
-    setTempData(profileData);
+    setTempData(settingsData);
     setIsEditing(true);
   };
 
@@ -69,13 +72,19 @@ const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData
       return;
     }
 
-    setProfileData(tempData);
+    // Validate address
+    if (tempData.address.trim().length < 5) {
+      Alert.alert('Error', 'Please enter a valid address');
+      return;
+    }
+
+    setSettingsData(tempData);
     setIsEditing(false);
     Alert.alert('Success', 'Settings updated successfully!');
   };
 
   const handleCancel = () => {
-    setTempData(profileData);
+    setTempData(settingsData);
     setIsEditing(false);
   };
 
@@ -176,7 +185,7 @@ const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData
                 autoCapitalize="words"
               />
             ) : (
-              <Text style={styles.displayText}>{profileData.username}</Text>
+              <Text style={styles.displayText}>{settingsData.username}</Text>
             )}
           </View>
 
@@ -193,7 +202,7 @@ const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData
                 autoCapitalize="none"
               />
             ) : (
-              <Text style={styles.displayText}>{profileData.email}</Text>
+              <Text style={styles.displayText}>{settingsData.email}</Text>
             )}
           </View>
 
@@ -209,7 +218,24 @@ const Settings: React.FC<SettingsProps> = ({ onBack, profileData, setProfileData
                 keyboardType="phone-pad"
               />
             ) : (
-              <Text style={styles.displayText}>{profileData.phoneNumber}</Text>
+              <Text style={styles.displayText}>{settingsData.phoneNumber}</Text>
+            )}
+          </View>
+
+          {/* Address */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Address</Text>
+            {isEditing ? (
+              <TextInput
+                style={[styles.input, styles.textArea]}
+                value={tempData.address}
+                onChangeText={(text) => setTempData({...tempData, address: text})}
+                placeholder="Enter your address"
+                multiline={true}
+                numberOfLines={3}
+              />
+            ) : (
+              <Text style={styles.displayText}>{settingsData.address}</Text>
             )}
           </View>
 
@@ -404,6 +430,10 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
     backgroundColor: 'white',
+  },
+  textArea: {
+    height: 80,
+    textAlignVertical: 'top',
   },
   displayText: {
     fontSize: 16,

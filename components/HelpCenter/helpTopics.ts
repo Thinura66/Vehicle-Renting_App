@@ -43,7 +43,7 @@ export const HELP_TOPICS = {
       {
         id: 'cancel-booking',
         title: 'How to cancel a booking',
-        description: 'Cancellation process, policies, and refund information'
+        description: 'Cancellation process and policies'
       }
     ]
   }

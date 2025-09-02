@@ -315,6 +315,12 @@ const styles = StyleSheet.create({
     color: '#1f2937',
     marginBottom: 16,
   },
+  comingSoon: {
+    fontSize: 16,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginTop: 40,
+  },
   contactInfo: {
     backgroundColor: 'white',
     borderRadius: 12,

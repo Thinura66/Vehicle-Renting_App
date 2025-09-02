@@ -17,7 +17,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 interface DropdownMenuItem {
   id: string;
   title: string;
-  icon: string;
+  icon: any;
   color: string;
   onPress: () => void;
 }
@@ -65,7 +65,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     {
       id: 'profile',
       title: 'Profile',
-      icon: '👤',
+      icon: require('./icons/user.png'),
       color: '#2563EB',
       onPress: () => {
         closeMenu();
@@ -75,8 +75,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     {
       id: 'settings',
       title: 'Settings',
-      icon: '⚙️',
-      color: '#059669',
+      icon: require('./icons/settings.png'),
+      color: '#2563EB',
       onPress: () => {
         closeMenu();
         onSettings();
@@ -85,8 +85,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     {
       id: 'bookings',
       title: 'My Bookings',
-      icon: '📋',
-      color: '#DC2626',
+      icon: require('./icons/mybookings.png'),
+      color: '#2563EB',
       onPress: () => {
         closeMenu();
         onMyBookings();
@@ -95,8 +95,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     {
       id: 'help',
       title: 'Help Center',
-      icon: '❓',
-      color: '#7C3AED',
+      icon: require('./icons/help.png'),
+      color: '#2563EB',
       onPress: () => {
         closeMenu();
         onHelpCenter();
@@ -105,8 +105,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     {
       id: 'logout',
       title: 'Logout',
-      icon: '🚪',
-      color: '#DC2626',
+      icon: require('./icons/log-out.png'),
+      color: '#2563EB',
       onPress: handleLogout,
     },
   ];
@@ -190,7 +190,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                 onPress={item.onPress}
               >
                 <View style={[styles.iconContainer, { backgroundColor: `${item.color}20` }]}>
-                  <Text style={[styles.menuIcon, { color: item.color }]}>{item.icon}</Text>
+                  <Image source={item.icon} style={styles.menuIcon} />
                 </View>
                 <Text
                   style={[
@@ -325,8 +325,9 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   menuIcon: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
   },
   menuText: {
     flex: 1,

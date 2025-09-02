@@ -19,15 +19,6 @@ export default function App() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [searchLocation, setSearchLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  
-  // Shared profile data state
-  const [profileData, setProfileData] = useState({
-    username: 'John Doe',
-    email: 'john.doe@example.com',
-    phoneNumber: '+1 234 567 8900',
-    address: '123 Main Street, City, State, 12345',
-    profilePhoto: '',
-  });
 
   const vehicleCategories: Category[] = [
     { id: 'all', name: 'All', count: 150 },
@@ -169,23 +160,7 @@ export default function App() {
 
   // Show main app if user is logged in
   if (currentPage === 'profile') {
-    return (
-      <Profile 
-        onBack={handleBackToHome} 
-        profileData={profileData}
-        setProfileData={setProfileData}
-      />
-    );
-  }
-
-  if (currentPage === 'settings') {
-    return (
-      <Settings 
-        onBack={handleBackToHome} 
-        profileData={profileData}
-        setProfileData={setProfileData}
-      />
-    );
+    return <Profile onBack={handleBackToHome} />;
   }
 
   if (currentPage === 'bookings') {
@@ -194,6 +169,10 @@ export default function App() {
 
   if (currentPage === 'help') {
     return <HelpCenter onBack={handleBackToHome} />;
+  }
+
+  if (currentPage === 'settings') {
+    return <Settings onBack={handleBackToHome} />;
   }
 
   if (currentPage === 'rental' && selectedVehicle) {
