@@ -15,16 +15,17 @@ interface Vehicle {
 
 interface VehicleCardProps {
   vehicle: Vehicle;
+  onRentNow?: (vehicle: Vehicle) => void;
 }
 
-const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
+const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onRentNow }) => {
   return (
     <View style={styles.vehicleCard}>
       <View style={styles.vehicleImageContainer}>
         <Image 
           source={vehicle.image} 
           style={styles.vehicleImage}
-          resizeMode="contain"
+          resizeMode="cover"
         />
         <View style={styles.ratingBadge}>
           <Text style={styles.ratingText}>⭐ {vehicle.rating}</Text>
@@ -48,7 +49,10 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
             <Text style={styles.priceText}>${vehicle.price}/day</Text>
             <Text style={styles.locationText}>📍 {vehicle.location}</Text>
           </View>
-          <TouchableOpacity style={styles.rentButton}>
+          <TouchableOpacity 
+            style={styles.rentButton}
+            onPress={() => onRentNow && onRentNow(vehicle)}
+          >
             <Text style={styles.rentButtonText}>Rent Now</Text>
           </TouchableOpacity>
         </View>

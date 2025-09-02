@@ -6,10 +6,15 @@ import SearchBar from './components/SearchBar';
 import Categories from './components/Categories';
 import VehicleList from './components/VehicleList';
 import Login from './components/login/login';
+import Profile from './components/Profile/Profile';
+import { MyBookings } from './components/Mybookings';
+import { RentalBooking } from './components/RentalBooking';
 import { Vehicle, Category } from './components/types';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'profile', 'bookings', 'rental', etc.
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [searchLocation, setSearchLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -29,8 +34,16 @@ export default function App() {
       rating: 4.8,
       reviews: 124,
       image: require('./assets/bmw-3-series-sedan.png'),
-      features: ['Automatic', 'GPS', 'Bluetooth'],
+      features: ['Automatic', 'GPS', 'Bluetooth', 'Leather Seats', 'Sunroof'],
       location: 'Downtown',
+      description: 'Experience luxury and performance with the BMW 3 Series. This premium sedan offers exceptional comfort, advanced technology, and dynamic driving experience perfect for business trips and city exploration.',
+      specifications: {
+        engine: '2.0L TwinPower Turbo',
+        transmission: 'Automatic',
+        fuel: 'Gasoline',
+        seats: 5,
+        year: 2023
+      }
     },
     {
       id: 2,
@@ -40,8 +53,16 @@ export default function App() {
       rating: 4.6,
       reviews: 89,
       image: require('./assets/honda-civic-compact-car.png'),
-      features: ['Manual', 'AC', 'USB'],
+      features: ['Manual', 'AC', 'USB', 'Backup Camera', 'Cruise Control'],
       location: 'Airport',
+      description: 'The Honda Civic offers reliable performance and fuel efficiency. Perfect for daily commuting and weekend trips with modern features and comfortable interior.',
+      specifications: {
+        engine: '1.5L Turbo',
+        transmission: 'Manual',
+        fuel: 'Gasoline',
+        seats: 5,
+        year: 2023
+      }
     },
     {
       id: 3,
@@ -51,8 +72,16 @@ export default function App() {
       rating: 4.9,
       reviews: 67,
       image: require('./assets/yamaha-mt-07.png'),
-      features: ['Manual', 'Sport Mode'],
+      features: ['Manual', 'Sport Mode', 'ABS', 'LED Lights'],
       location: 'City Center',
+      description: 'The Yamaha MT-07 delivers thrilling performance with its crossplane crankshaft engine. Perfect for riders seeking excitement and agility on city streets and winding roads.',
+      specifications: {
+        engine: '689cc Parallel Twin',
+        transmission: '6-speed Manual',
+        fuel: 'Gasoline',
+        seats: 2,
+        year: 2023
+      }
     },
   ];
 
@@ -77,7 +106,7 @@ export default function App() {
   };
 
   const handleProfile = () => {
-    Alert.alert('Profile', 'Profile page would be implemented here');
+    setCurrentPage('profile');
   };
 
   const handleSettings = () => {
@@ -85,7 +114,7 @@ export default function App() {
   };
 
   const handleMyBookings = () => {
-    Alert.alert('My Bookings', 'My Bookings page would be implemented here');
+    setCurrentPage('bookings');
   };
 
   const handleHelpCenter = () => {
@@ -96,7 +125,24 @@ export default function App() {
     // Reset any filters and show home view
     setSearchLocation('');
     setSelectedCategory('all');
+    setCurrentPage('home');
     console.log('Redirected to home page');
+  };
+
+  const handleBackToHome = () => {
+    setCurrentPage('home');
+    setSelectedVehicle(null);
+  };
+
+  const handleRentNow = (vehicle: Vehicle) => {
+    setSelectedVehicle(vehicle);
+    setCurrentPage('rental');
+  };
+
+  const handleConfirmBooking = (bookingDetails: any) => {
+    // Here you would typically save the booking to your backend
+    console.log('Booking confirmed:', bookingDetails);
+    // You could also add the booking to a local state or context
   };
 
   // Show login page if user is not logged in
@@ -111,6 +157,24 @@ export default function App() {
   }
 
   // Show main app if user is logged in
+  if (currentPage === 'profile') {
+    return <Profile onBack={handleBackToHome} />;
+  }
+
+  if (currentPage === 'bookings') {
+    return <MyBookings onBack={handleBackToHome} />;
+  }
+
+  if (currentPage === 'rental' && selectedVehicle) {
+    return (
+      <RentalBooking 
+        vehicle={selectedVehicle}
+        onBack={handleBackToHome}
+        onConfirmBooking={handleConfirmBooking}
+      />
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
@@ -137,7 +201,7 @@ export default function App() {
           onSelectCategory={setSelectedCategory}
         />
 
-        <VehicleList vehicles={featuredVehicles} />
+        <VehicleList vehicles={featuredVehicles} onRentNow={handleRentNow} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -8,6 +8,14 @@ export interface Vehicle {
   image: any;
   features: string[];
   location: string;
+  description?: string;
+  specifications?: {
+    engine: string;
+    transmission: string;
+    fuel: string;
+    seats: number;
+    year: number;
+  };
 }
 
 export interface Category {

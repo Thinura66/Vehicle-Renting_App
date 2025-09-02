@@ -16,11 +16,12 @@ interface Vehicle {
 
 interface VehicleListProps {
   vehicles: Vehicle[];
+  onRentNow?: (vehicle: Vehicle) => void;
 }
 
-const VehicleList: React.FC<VehicleListProps> = ({ vehicles }) => {
+const VehicleList: React.FC<VehicleListProps> = ({ vehicles, onRentNow }) => {
   const renderVehicleCard = ({ item }: { item: Vehicle }) => (
-    <VehicleCard vehicle={item} />
+    <VehicleCard vehicle={item} onRentNow={onRentNow} />
   );
 
   return (
