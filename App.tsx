@@ -11,10 +11,12 @@ import Settings from './components/Settings/Settings';
 import { MyBookings } from './components/Mybookings';
 import { RentalBooking } from './components/RentalBooking';
 import HelpCenter from './components/HelpCenter/HelpCenter';
+import Admin from './components/admin/Admin';
 import { Vehicle, Category } from './components/types';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [currentPage, setCurrentPage] = useState('home'); // 'home', 'profile', 'bookings', 'rental', etc.
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [searchLocation, setSearchLocation] = useState('');
@@ -88,9 +90,19 @@ export default function App() {
   ];
 
   const handleLogin = (email: string, password: string) => {
-    // Here you would typically make an API call to authenticate the user
-    console.log('Login attempt:', email);
+    // Check for admin credentials
+    if (email === 'admin@rentals.com' && password === 'admin123') {
+      console.log('Admin login successful');
+      Alert.alert('Success', 'Admin login successful!');
+      setIsAdmin(true);
+      setIsLoggedIn(true);
+      return;
+    }
+    
+    // Regular user login
+    console.log('User login attempt:', email);
     Alert.alert('Success', 'Login successful!');
+    setIsAdmin(false);
     setIsLoggedIn(true);
   };
 
@@ -104,7 +116,16 @@ export default function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setIsAdmin(false);
+    setCurrentPage('home');
     Alert.alert('Logged Out', 'You have been successfully logged out');
+  };
+
+  const handleAdminLogout = () => {
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+    setCurrentPage('home');
+    Alert.alert('Admin Logout', 'You have been logged out from admin panel');
   };
 
   const handleProfile = () => {
@@ -156,6 +177,11 @@ export default function App() {
         onForgotPassword={handleForgotPassword}
       />
     );
+  }
+
+  // Show admin interface if admin is logged in
+  if (isAdmin) {
+    return <Admin onLogout={handleAdminLogout} />;
   }
 
   // Show main app if user is logged in
