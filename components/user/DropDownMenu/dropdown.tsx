@@ -209,7 +209,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
           <View style={styles.panelFooter}>
             <View style={styles.logoContainer}>
               <Image 
-                source={require('../../assets/Logo.png')} 
+                source={require('../../../assets/Logo.png')} 
                 style={styles.logoImage}
                 resizeMode="contain"
               />

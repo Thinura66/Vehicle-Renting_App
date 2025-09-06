@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import DropdownMenu from './Drop Down Menue/dropdown';
+import DropdownMenu from './DropDownMenu/dropdown';
 
 interface HeaderProps {
   showLogout?: boolean;
@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Logo at right corner */}
         <Image 
-          source={require('../assets/Logo.png')} 
+          source={require('../../assets/Logo.png')} 
           style={styles.logo}
           resizeMode="contain"
         />

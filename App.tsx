@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView, SafeAreaView, Alert } from 'react-native';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import Categories from './components/Categories';
-import VehicleList from './components/VehicleList';
+import Header from './components/user/Header';
+import SearchBar from './components/user/SearchBar';
+import Categories from './components/user/Categories';
+import VehicleList from './components/user/VehicleList';
 import Login from './components/login/login';
-import Profile from './components/Profile/Profile';
-import Settings from './components/Settings/Settings';
-import { MyBookings } from './components/Mybookings';
-import { RentalBooking } from './components/RentalBooking';
-import HelpCenter from './components/HelpCenter/HelpCenter';
+import Profile from './components/user/Profile/Profile';
+import Settings from './components/user/Settings/Settings';
+import { MyBookings } from './components/user/MyBookings';
+import { RentalBooking } from './components/user/RentalBooking';
+import HelpCenter from './components/user/HelpCenter/HelpCenter';
 import Admin from './components/admin/Admin';
 import { Vehicle, Category } from './components/types';
 
